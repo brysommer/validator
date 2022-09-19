@@ -35,10 +35,14 @@ server.post('/data', async(req, res) => {
                 type: 'string', 
                 minLength: 1,
                 maxLength: 3, 
+            },
+            date: { 
+                type: 'string', 
+                pattern: '/[12][09]\d\d-[01][1-9]-[0-3][1-9]/', 
             },    
         },
         additionalProperties: false,
-        required: ['name', 'surname', 'age'],
+        required: ['name', 'surname', 'age', 'date'],
     };
     
     const validate = ajv.compile(schema);

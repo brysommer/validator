@@ -6,6 +6,7 @@ el.addEventListener('submit', async (ev) => {
         name : elem.querySelector('[name="name"]').value,
         surname : elem.querySelector('[name="surname"]').value,
         age : elem.querySelector('[name="age"]').value,
+        date : elem.querySelector('[name="date"]').value,
     };
     console.log(formData);
 
@@ -16,5 +17,6 @@ el.addEventListener('submit', async (ev) => {
         'name': formData.name,
         'surname': formData.surname,
         'age': formData.age,
+        'date': formData.date,
     });
 });
