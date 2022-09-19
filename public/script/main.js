@@ -12,10 +12,9 @@ el.addEventListener('submit', async (ev) => {
 
     
 
-    await axios.post('/test', {
+    await axios.post('/data', {
         'name': formData.name,
         'surname': formData.surname,
         'age': formData.age,
     });
-    console.log(formData.name);
 });

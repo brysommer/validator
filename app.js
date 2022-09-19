@@ -3,17 +3,50 @@ const server = express();
 const multer  = require('multer')
 const upload = multer({ dest: 'uploads/' });
 const axios = require('axios').default;
-const Ajv = require("ajv")
+const Ajv = require("ajv");
 
 
 server.set('view engine', 'ejs');
 server.set('views', './views');
+server.use(express.urlencoded({ extended: true }));
+server.use(express.json());
 
 
 server.use(express.static('public'));
 
 server.post('/data', async(req, res) => {
-console.log(req.body);
+    const data = req.body;
+    console.log(data);
+    const ajv = new Ajv();
+    const schema  = {
+        type: 'object',
+        properties: {
+            name: { 
+                type: 'string', 
+                minLength: 3,
+                maxLength: 15,
+            },
+            surname: { 
+                type: 'string', 
+                minLength: 3,
+                maxLength: 15, 
+            },
+            age: { 
+                type: 'string', 
+                minLength: 1,
+                maxLength: 3, 
+            },    
+        },
+        additionalProperties: false,
+        required: ['name', 'surname', 'age'],
+    };
+    
+    const validate = ajv.compile(schema);
+    const valid = validate(data);
+    console.log(valid);
+    if (!valid) console.log(validate.errors);
+    if (valid) console.log('success');
+  
 
 });
 
