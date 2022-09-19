@@ -17,6 +17,7 @@ server.use(express.static('public'));
 server.post('/data', async(req, res) => {
     const data = req.body;
     console.log(data);
+    console.log(data.date.length);
     const ajv = new Ajv();
     const schema  = {
         type: 'object',
@@ -38,7 +39,7 @@ server.post('/data', async(req, res) => {
             },
             date: { 
                 type: 'string', 
-                pattern: '/[12][09]\d\d-[01][1-9]-[0-3][1-9]/', 
+                pattern: '[12][09][0-9][0-9]-[01][1-9]-[0-3][1-9]', 
             },    
         },
         additionalProperties: false,
