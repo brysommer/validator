@@ -1,12 +1,24 @@
 const express = require('express');
 const server = express();
 const validMW = require('./middleware');
+const mainRouter = require('./routes/routing');
 
 server.set('view engine', 'ejs');
 server.set('views', './views');
 server.use(express.urlencoded({ extended: true }));
 server.use(express.json());
 server.use(express.static('public'));
+server.use((req, res, next) => {
+    console.log('URL', req.url);
+    next();
+});
+let counter = 0;
+server.use((req, res, next) => {
+    counter = counter + 1;
+    console.log(counter);
+    next();
+});
+
 server.post('/data', validMW({
             type: 'object',
             properties: {
@@ -36,7 +48,12 @@ server.post('/data', validMW({
 async(req, res) => {
     console.log(req.body);
 });
-server.get('/', (req, res) => {
-    res.render('main');
-});
+
+server.use('/', mainRouter);
+
+
+server.use((req, res, next) => {
+    res.statusCode = 404;
+    res.render('404');
+  });
 server.listen(3000);
